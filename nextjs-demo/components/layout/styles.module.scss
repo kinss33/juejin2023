@@ -1,6 +1,8 @@
 .layout {
   background-color: var(--primary-background-color);
   .main {
-    min-height: calc(100vh - 34.85rem);
+    height:fit-content;
+     //min-height: calc(100vh - 34.85rem);
   }
 }
+//bug 计算主页面大小

@@ -4,19 +4,69 @@ import { ThemeContext } from "@/stores/theme";
 import { UserAgentContext } from "@/stores/userAgent";
 import { Themes, Environment } from "@/constants/enum";
 import { Popup, IPopupRef } from "../popup";
-
+import {Button,IButtonProps,EbuttonType} from "../button/index"
 export interface INavBarProps {}
+export interface IButtonListProps {
+  ButtonListData:IButtonProps[]
+}
+export interface ItestProps {
+  ButtonListData:Number[]
+}
+const button1:IButtonProps = {
+  url:"df",
+  ButtonText:"IOS",
+}
+const button2:IButtonProps = {
+  url:"df",
+  ButtonText:"前端",
+}
+const data:IButtonListProps = {
+  ButtonListData:[button1,button2]
+};
+// function ButtonList(buttonData:IButtonListProps) {
+ 
+//   const content =  buttonData.ButtonListData.map((buttonData) => 
+//   <div >
+//     <Button url={buttonData.url} ButtonText={buttonData.ButtonText}></Button>
+//   </div>);
+
+//   return (
+//       <div>
+//           {/* { content } */}
+//       </div>
+//   )
+// }
+//不能用Array
+//function ButtonList(data:Array<Number>) {
+
+function ButtonList(data:IButtonListProps) {
+
+    const content =  data.ButtonListData.map((buttonData) => 
+    <Button url={buttonData.url} ButtonText={buttonData.ButtonText} buttonType={EbuttonType.normal}></Button>);
+
+  return (
+      <div className={styles.contentSwitch}> 
+          { content }
+      </div>
+  )
+}
+
+
 
 export const NavBar: FC<INavBarProps> = ({}) => {
   const { setTheme } = useContext(ThemeContext);
   const { userAgent } = useContext(UserAgentContext);
   const popupRef = useRef<IPopupRef>(null);
 
+
   return (
+    <div className={styles.StickTest}>
     <div className={styles.navBar}>
       <a href="http://127.0.0.1:3000/">
         <div className={styles.logoIcon}></div>
       </a>
+      
+
       <div className={styles.themeArea}>
         <div
           className={styles.popupText}
@@ -49,6 +99,10 @@ export const NavBar: FC<INavBarProps> = ({}) => {
       <Popup ref={popupRef}>
         <div>这是一个弹窗</div>
       </Popup>
+    </div>
+      <div  className={styles.navBar} >
+      <ButtonList ButtonListData={data.ButtonListData} ></ButtonList>
+      </div>
     </div>
   );
 };

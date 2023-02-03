@@ -1,0 +1,84 @@
+@import "../media.scss";
+
+
+.timelineContainer{
+  
+  margin-top: 0;
+  margin: 0 auto;
+  max-width: 960px;
+  .tagNav{
+    display: block;
+    background-color: red; 
+  }
+  .timelineContent{
+
+    position: relative;
+    margin-top: 0.33rem;
+    .entryList{
+      margin-right:21.667rem;
+      border-radius: 2px;
+      width: auto;
+      .listHeader{
+        background-color: var(--navbar-background-color);
+        padding: 1.3rem 1rem;
+        border-bottom: 1px solid hsla(0,0%,59.2%,.1);
+        .listNav{
+          display: flex;
+          justify-content: space-between;
+          .navList{
+            display: flex;
+            align-items: center;
+            line-height: 1;
+            .navItem{
+              padding: 0 1.2rem;
+              list-style: none;
+              font-size: 1.17rem;
+              position: relative;
+              cursor: pointer;
+
+              border-right: 1px solid hsla(0,0%,59.2%,.2);
+            }
+          }
+        }
+      }
+      .entryListWrap{
+        display: block;
+      }
+    }
+    .indexAside{
+      background-color: red; 
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+  }
+}
+@include media-ipad {
+  .article {
+    width: 80%;
+    .content {
+      img {
+        width: 100%;
+      }
+    }
+  }
+}
+
+@include media-mobile {
+  .article {
+    width: 80%;
+    .title {
+      font-size: 1.75rem;
+      line-height: 2.4375rem;
+    }
+    .content {
+      h2 {
+        font-size: 1.125rem;
+        line-height: 1.5625rem;
+      }
+      img {
+        width: 100%;
+      }
+    }
+  }
+}

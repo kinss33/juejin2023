@@ -12,6 +12,7 @@ import { IComponentProps } from './_app';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
+//传递属性定义
 interface IProps {
   title: string;
   description: string;

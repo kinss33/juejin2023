@@ -9,11 +9,12 @@ import { ThemeContextProvider } from '@/stores/theme';
 import { UserAgentProvider } from '@/stores/userAgent';
 import { LanguageContextProvider } from '@/stores/language';
 import './global.scss';
+//?:boolean意思是类型可以是boolean 也可以是undefined
 export interface IComponentProps {
   isMobile?: boolean;
   isSupportWebp?: boolean;
 }
-
+//& 好像是拼接的意思
 const MyApp = (data: AppProps & ILayoutProps & IComponentProps): JSX.Element => {
   const { Component, pageProps, navbarData, footerData, isMobile, isSupportWebp } = data;
 

@@ -12,7 +12,7 @@ interface IArticleIntroProps {
   list: Array<{ label: string; info: string; articleId: number }>;
   total: number;
 }
-
+//axio带参数的写法
 const getArticleIntroData = (req: NextApiRequest, res: NextApiResponse<IArticleIntroProps>): void => {
   const { pageNo, pageSize } = req.body;
   axios

@@ -1,5 +1,13 @@
 @import "../../pages/media.scss";
 
+.button{
+  font-size: 1rem;
+  padding: 4.375rem 9.0625rem;
+  background-color: var(--footer-background-color);
+  .buttonText{
+    color:var(--primary-color);
+  }
+}
 .footer {
   font-size: 1rem;
   padding: 4.375rem 9.0625rem;

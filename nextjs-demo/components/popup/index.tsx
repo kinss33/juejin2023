@@ -82,6 +82,7 @@ export const Popup = forwardRef<IPopupRef, IProps>(({ children }, ref) => {
     <></>
   );
 
+  //判断网页有没有document对象，如果有则新建个在原有的body内新建一个div，否则挂载到原来的div中
   return typeof document !== "undefined"
     ? ReactDom.createPortal(renderDom, document.body)
     : renderDom;

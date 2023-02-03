@@ -9,7 +9,7 @@ interface IThemeContextProps {
 interface IProps {
   children: JSX.Element;
 }
-
+//创建主题上下文
 export const ThemeContext = createContext<IThemeContextProps>({} as IThemeContextProps);
 
 export const ThemeContextProvider = ({ children }: IProps): JSX.Element => {
@@ -18,11 +18,14 @@ export const ThemeContextProvider = ({ children }: IProps): JSX.Element => {
   // 监听本地缓存来同步不同页面间的主题
   useEffect(() => {
     const checkTheme = (): void => {
+      //从localStorage 中 获得主题 如果没有则设置Themes.light
       const item = (localStorage.getItem('theme') as Themes) || Themes.light;
       setTheme(item);
+      //这是什么意思
       document.getElementsByTagName('html')[0].dataset.theme = item;
     };
     checkTheme();
+    //如果内部存储发生变化 则 checkTheme
     window.addEventListener('storage', checkTheme);
     return (): void => {
       window.removeEventListener('storage', checkTheme);
@@ -40,6 +43,7 @@ export const ThemeContextProvider = ({ children }: IProps): JSX.Element => {
         },
       }}
     >
+      {/* 传入子节点 */}
       {children}
     </ThemeContext.Provider>
   );
