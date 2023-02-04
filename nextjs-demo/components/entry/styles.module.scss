@@ -1,11 +1,90 @@
 @import "../../pages/media.scss";
 
+.rank{
+  display: inline-flex;
+  align-items: center;
+  margin-left: 0.33rem;
+  vertical-align: middle;
+}
+.imButton{
+  font-size: 14px;
+  box-sizing: border-box;
+  display: flex;
+  width: 122px;
+  height: 36px;
+  background: var(--navbar-background-color);
+  border: 1px solid var(--juejin-brand-stroke1-normal);
+  border-radius: 4px;
+  justify-content: center;
+  align-items: center;
+}
+.followButton{
+  margin: 0;
+  width: 122px;
+  padding: 7px 20px;
+  display: flex;
+  align-items: center;
+  background-color: #1d7dfa;
+  border-radius: 4px;
+  justify-content: center;
+  box-sizing: border-box;
+  font-size: 14px;
+  line-height: 22px;
+  color: #fff;
+  border: none;
+  white-space: nowrap;
+}
+.infoRow{
+  display: flex;
+  .avatar{
+    margin-right: 1rem;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    background-position: 50%;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .userInfo{
+    line-height: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    .userName{
+      display: flex;
+      align-items: center;
+      font-size: 1.33rem;
+      line-height: 2rem;
+      font-weight: 500;
+      color: #252933;
+      .name{
+        display: inline-block;
+        vertical-align: top;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
 
+    }
+    .position{
+      margin: 0.333rem 0 0;
+      font-size: 1rem;
+      line-height: 1.67rem;
+      max-width: 165px;
+      color: #8f969c;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}
 .dislikeMenu{
   position: absolute;
   top: 100%;
   right: 0;
-  z-index: 100;
+  z-index: 120;
   display: flex;
   flex-direction: column;
   width: 17.67rem;
@@ -13,8 +92,144 @@
   background-color: #fff;
   box-shadow: 0 8px 20px rgb(0 0 0 / 10%);
   overflow: hidden;
+  .menuItem{
+    height: 2.67rem;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    padding: 0 1rem;
+    :first-child{
+      padding-top: 2px;
+    }
+    .menuIcon{
+      width: 1.333rem;
+      height: 1.333rem;
+      background-repeat: no-repeat;
+      background-position: 0 0;
+      background-size: 100% 100%;
+    }
+    .menuText{
+      margin-left: 0.667rem;
+      font-size: 1.167rem;
+      line-height: 2rem;
+      color: #252933;
+    }
+  }
+  .tagRow{
+    padding: 0.333rem 1rem 1rem;
+    .tagList{
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      align-content: flex-start;
+      justify-content: flex-start;
+      .tagItem{
+        color: #515767;
+        box-sizing: border-box;
+        font-size: 1rem;
+        height: 2rem;
+        max-width: 15.67rem;
+        padding: 0 0.667rem;
+        border-radius: 4px;
+        background-color: #f7f8fa;
+        margin-bottom: 0.667rem;
+        line-height: 2rem;
+        border: 1px solid #f7f8fa;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-break: break-all;
+      }
+    }
+    .btnBlockTag{
+      background: #1e80ff;
+      border-radius: 4px;
+      outline: none;
+      border: none;
+      color: #fff;
+      font-size: 1rem;
+      text-align: center;
+      line-height: 28px;
+      width: 100%;
+      height: 28px;
+      box-sizing: border-box;
+      cursor: pointer;
+      padding: 0;
+      margin-top: 0.333rem;
+      font-size: 12px;
+      :disabled{
+        background: #abcdff;
+        cursor: not-allowed;
+      }
+    }
+  }
 }
+.popoverContent{
+  position: fixed;
+  top: 20rem;
+  left: 2rem;
+  padding: 1.333rem 1.333rem 1.833rem;
+  width: 300px;
+  font-weight: 400;
+  line-height: 1.2;
+  background-color: #fff;
+  border: 1px solid #ebebeb;
+  box-shadow: 0 2px 6px 0 rgb(0 0 0 / 8%);
+  box-sizing: border-box;
+  border-radius: 2px;
+  cursor: default;
+  z-index: 250;
+  box-shadow: 0 8px 24px rgb(81 87 103 / 16%);
+  .operateButton{
+    display: flex;
+    align-items: center;
+    margin-top: 16px;
+    .imButton{
+      margin-left: 16px;
+    }
+  }
+  .metaRow{
+    display: flex;
+    align-items: center;
+    margin-top: 2rem;
+    .metaList{
+      flex: 1 1 auto;
+      display: flex;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      align-items: center;
+      position: relative; 
+      .metaItem{
+        flex: 1 1 auto;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        .count{
+          font-size: 1.333rem;
+          font-weight: 500;
+          color: #252933;
+          line-height: 2.333rem;
+        }
+        .title{
+          font-size: 1.167rem;
+          line-height: 2rem;
+          color: #8a919f;
+        }
+      }
+      .divider{
+        width: 260px;
+        height: 1px;
+        top: -9px;
+        position: absolute;
+        background-color: #e4e6eb;
+      }
+    }
+  }
 
+}
 
 .item{
   transition: all .3s ease-in;
@@ -102,7 +317,17 @@
         .titleRow{
           display: flex;
           margin-bottom: 8px;
-
+          .title{
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 24px;
+            width: 100%;
+            display: -webkit-box;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
+          }
         }
         .abstract{
           margin-bottom: 10px;
@@ -128,9 +353,6 @@
       right: 1.667rem;
       transition: all .15s linear;
     }
-    .dislikeMenu{
-
-    }
   }
 }
 //一个通用dislike 另一个是具体的dislike 增加通用性
@@ -143,17 +365,7 @@
   cursor: pointer;
 
 }
-.title{
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 24px;
-  width: 100%;
-  display: -webkit-box;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1;
-}
+
 // @include media-ipad {
 // }
 

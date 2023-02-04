@@ -15,49 +15,114 @@ import React, {
 } from "react";
 import { time } from "console";
 
-const DisLikePop:FC<{}> = ({})=>{
-
-  return(
-    <div className={styles.dislikeMenu} >hello</div>
-  );
-}
 export const Entry:FC<{}> =({
 }) =>{
-  const [dislikeVisible, setDislikeVisible] = useState(false);
-  let interp:Boolean = false;
-  const [dislikeLeave, setDislikeLeave] = useState(false);
-  const [userInfo, setUserInfo] = useState(false);
-  const popoverRef = useRef<IPopOverProps>(null);
+    
+  const DisLikeMenu:FC<{}> = ({})=>{
 
-  useEffect(() => {
-   if(dislikeLeave==true){
-    setTimeout(() => {
-      setDislikeVisible(false);
-    }, 100);
-   }
-  }, [dislikeLeave]);
-  const disLkieMenu = dislikeVisible?(
-    <div className={dislikeLeave?styles.dislikeMenuLeave:styles.dislikeMenuEnter} 
-    onMouseLeave={():void=>{
-      interp=false;
-      setTimeout(() => {
-        if(interp==false){
-          setDislikeLeave(true);
-        }
-      }, 800);
-    }}
-    onMouseEnter={():void=>{
-      if(dislikeVisible==true){
-        interp=true;
-      }
-    }}>
-    hello</div>
-  ):(<></>);
+    const [tagVisible, setTagVisible] = useState(false);
+    return(
+      <div className={styles.dislikeMenu} >
+
+        <div className={styles.menuItem}>
+          <span className={styles.menuIcon} ></span>
+          <span className={styles.menuText} >不感兴趣</span>
+        </div>
+        <div className={styles.menuItem}>
+          <span className={styles.menuIcon} ></span>
+          <span className={styles.menuText} >屏蔽作者未完成</span>
+        </div>
+        <div className={styles.menuItem}>
+          <span className={styles.menuIcon} ></span>
+          <span className={styles.menuText} >屏蔽标签</span>
+        </div>
+        <div className={styles.tagsRow}>
+          <div className={styles.tagList}> 
+          <span className={styles.tagItem}>数据注入
+          </span>
+          </div>
+          <div className={styles.btnBlockTag} >
+            确定屏蔽：数据注入
+          </div>
+        </div>
+        <div className={styles.menuItem}>
+          <span className={styles.menuIcon} ></span>
+          <span className={styles.menuText} >举报</span>
+        </div>
+        <div className={styles.menuItem}>
+          <span className={styles.menuIcon} ></span>
+          <span className={styles.menuText} >举报</span>
+        </div>
+      </div>
+    );
+  }
+
+  const UserMessageMenu:FC<{}> = ({})=>{
+
+    const [tagVisible, setTagVisible] = useState(false);
+    return(
+      <div className={styles.popoverContent} >
+        <div className={styles.infoRow}>
+          <a href="xx">
+            <img src="" alt="" className={styles.avatar} />
+          </a>
+          <div className={styles.userInfo} >
+            <a href="" className={styles.userName}>
+              <span className={styles.name}>
+                名字
+              </span>
+              <span className={styles.rank}>
+                等级
+              </span>
+            </a>
+            <div className={styles.position}>
+              描述
+            </div>
+          </div>
+        </div>
+        <div  className={styles.operateButton}>
+          <button className={styles.followButton}>
+            关注
+          </button>
+          <a href="" className={styles.imButton}>
+            私信
+          </a>
+        </div>
+        <div  className={styles.metaRow}>
+          <ul className={styles.metaList}>
+            <li className={styles.metaItem}>
+              <div className={styles.count}>2</div>
+              <div className={styles.title}>title</div>
+            </li>
+            <li  className={styles.divider}></li>
+            <li className={styles.metaItem}>
+              <div className={styles.count}>2</div>
+              <div className={styles.title}>title</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    );
+  }
+  const popoverDislikeRef = useRef<IPopOverProps>(null);
+  const popoverUserMessageRef = useRef<IPopOverProps>(null);
   return (
     <div className ={styles.item}>
         <div className ={styles.entry} >
           <div className={styles.metaContainer}>
-            <div className={styles.userMessage} >用户名</div>
+            <div className={styles.userMessage} 
+              onMouseEnter={(Event):void=>{
+                popoverUserMessageRef.current?.onMouseEnter(Event);
+              }}
+              onMouseLeave={(Event):void=>{
+                popoverUserMessageRef.current?.onMouseLeave(Event);
+              }}>用户名
+              <div>
+              <PopOver ref={popoverUserMessageRef} fadeTime={500} >
+              <UserMessageMenu/>
+              </PopOver>
+              </div>
+            </div>
             <div className={styles.date}  >时间</div>
             <div className={styles.tagList}  >
               <a className={styles.tag} href="xx">tag</a>
@@ -79,20 +144,15 @@ export const Entry:FC<{}> =({
 
           <div className={styles.dislike} 
           onMouseEnter={(Event):void=>{
-            popoverRef.current?.onMouseEnter(Event);
+            popoverDislikeRef.current?.onMouseEnter(Event);
           }}
           onMouseLeave={(Event):void=>{
-            popoverRef.current?.onMouseLeave(Event);
+            popoverDislikeRef.current?.onMouseLeave(Event);
           }}
            >
-          <PopOver ref={popoverRef} fadeTime={500} ><div className={styles.dislikeMenu} >hello</div></PopOver>
-            {/* {dislike&&<div  className={styles.dislikeMenu}
-              onMouseLeave={():void=>{
-              setTimeout((): void => {
-                setDislike(false);
-              }, 1000);
-          }} > <DisLikePop  /></div>}    */}
-          {disLkieMenu}
+          <PopOver ref={popoverDislikeRef} fadeTime={500} >
+              <DisLikeMenu/>
+              </PopOver>
           </div>
         </div>
       </div>

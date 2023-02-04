@@ -1,6 +1,9 @@
 @import "../../pages/media.scss";
 
 @mixin wrapper {
+  position: absolute;
+  display: flex;
+  z-index: 120;
   height: fit-content;
   width: fit-content;
 }
