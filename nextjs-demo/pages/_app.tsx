@@ -39,11 +39,10 @@ const MyApp = (data: AppProps & ILayoutProps & IComponentProps): JSX.Element => 
     </div>
   );
 };
-
 MyApp.getInitialProps = async (context: AppContext): Promise<AppProps & ILayoutProps & IComponentProps> => {
   const pageProps = await App.getInitialProps(context);
   const { data = {} } = await axios.get(`${LOCALDOMAIN}/api/layout`);
-
+  //为什么自动加上populate参数
   return {
     ...pageProps,
     ...data,

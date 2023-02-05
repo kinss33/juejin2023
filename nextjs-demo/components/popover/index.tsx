@@ -15,9 +15,7 @@ export enum EbuttonType{
   clear,
   normal
 }
-interface IProps {
-  children: JSX.Element;
-}
+
 export interface IPopOverProps {
   onMouseEnter:React.MouseEventHandler<HTMLDivElement>,
   onMouseLeave:React.MouseEventHandler<HTMLDivElement>,
@@ -61,7 +59,6 @@ export const PopOver = forwardRef<IPopOverProps, { children:JSX.Element,fadeTime
       ticking=true;
     }
   }
-
   useImperativeHandle(ref, () => ({
     onMouseEnter:enterFunction,
     onMouseLeave:leaveFunction,
@@ -76,8 +73,6 @@ export const PopOver = forwardRef<IPopOverProps, { children:JSX.Element,fadeTime
     </div>
   ):(
     <></>)
-
-
   return (
     Content
   );

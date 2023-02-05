@@ -21,7 +21,7 @@ html[data-theme="dark"] {
 
 html[data-theme="light"] {
   --primary-color: #333333;
-  --primary-background-color: rgb(206, 206, 206);
+  --primary-background-color: rgb(245, 245, 245);
   --footer-background-color: #f4f5f5;
   --navbar-background-color: rgb(255, 255, 255);
   
@@ -48,6 +48,13 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   color: var(--primary-color);
   overflow: hidden;
+  --like-icon: url("../public/like.png");
+  --like-hover-icon: url("../public/like_hover.png");
+  --view-icon: url("../public/view.png");
+  --comment-icon: url("../public/comment.png");
+  --comment-hover-icon: url("../public/comment_hover.png");
+  // --close--icon: url("../public/close.png");
+  // --close-hover-icon: url("../public/logo_light.png");
 }
 
 a {

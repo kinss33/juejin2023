@@ -1,85 +1,6 @@
 @import "../../pages/media.scss";
 
-.rank{
-  display: inline-flex;
-  align-items: center;
-  margin-left: 0.33rem;
-  vertical-align: middle;
-}
-.imButton{
-  font-size: 14px;
-  box-sizing: border-box;
-  display: flex;
-  width: 122px;
-  height: 36px;
-  background: var(--navbar-background-color);
-  border: 1px solid var(--juejin-brand-stroke1-normal);
-  border-radius: 4px;
-  justify-content: center;
-  align-items: center;
-}
-.followButton{
-  margin: 0;
-  width: 122px;
-  padding: 7px 20px;
-  display: flex;
-  align-items: center;
-  background-color: #1d7dfa;
-  border-radius: 4px;
-  justify-content: center;
-  box-sizing: border-box;
-  font-size: 14px;
-  line-height: 22px;
-  color: #fff;
-  border: none;
-  white-space: nowrap;
-}
-.infoRow{
-  display: flex;
-  .avatar{
-    margin-right: 1rem;
-    width: 4rem;
-    height: 4rem;
-    border-radius: 50%;
-    display: inline-block;
-    position: relative;
-    background-position: 50%;
-    background-size: cover;
-    background-repeat: no-repeat;
-  }
-  .userInfo{
-    line-height: 1;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    .userName{
-      display: flex;
-      align-items: center;
-      font-size: 1.33rem;
-      line-height: 2rem;
-      font-weight: 500;
-      color: #252933;
-      .name{
-        display: inline-block;
-        vertical-align: top;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
 
-    }
-    .position{
-      margin: 0.333rem 0 0;
-      font-size: 1rem;
-      line-height: 1.67rem;
-      max-width: 165px;
-      color: #8f969c;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-  }
-}
 .dislikeMenu{
   position: absolute;
   top: 100%;
@@ -101,12 +22,27 @@
     :first-child{
       padding-top: 2px;
     }
+    &:hover{
+      background-color: #fafafa;
+    }
     .menuIcon{
       width: 1.333rem;
       height: 1.333rem;
       background-repeat: no-repeat;
       background-position: 0 0;
       background-size: 100% 100%;
+    }
+    .blockAuthor{
+      background-image: url("../../public/muteauthor.svg");
+    }
+    .noInterest{
+      background-image: url("../../public/notinterest.svg");
+    }
+    .report{
+      background-image: url("../../public/report.svg");
+    }
+    .blockTag{
+      background-image: url("../../public/mutetag.svg");
     }
     .menuText{
       margin-left: 0.667rem;
@@ -166,9 +102,7 @@
   }
 }
 .popoverContent{
-  position: fixed;
-  top: 20rem;
-  left: 2rem;
+  position: sticky;
   padding: 1.333rem 1.333rem 1.833rem;
   width: 300px;
   font-weight: 400;
@@ -181,14 +115,6 @@
   cursor: default;
   z-index: 250;
   box-shadow: 0 8px 24px rgb(81 87 103 / 16%);
-  .operateButton{
-    display: flex;
-    align-items: center;
-    margin-top: 16px;
-    .imButton{
-      margin-left: 16px;
-    }
-  }
   .metaRow{
     display: flex;
     align-items: center;
@@ -230,9 +156,44 @@
   }
 
 }
+@mixin actionIconBase {
+  display: block;
+  width: 16px;
+  height: 16px;
+  background-size: 100%;
+}
 
+.like{
+  i{
+    @include actionIconBase;
+    background-image: var(--like-icon);
+    &:hover{
+      background-image: var(--like-hover-icon);
+    }
+  }
+
+}
+.comment {
+  i{
+    @include actionIconBase;
+    background-image: var(--comment-icon);
+    &:hover{
+      background-image: var(--comment-hover-icon);
+    }
+  }
+}
+.view i{
+  @include actionIconBase;
+  background-image: var(--view-icon);
+
+}
 .item{
-  transition: all .3s ease-in;
+  transition: all .2s ease-in;
+  background-color: var(--navbar-background-color);
+  &:hover{
+    background-color:#fafafa;
+  }
+
   .entry{
     cursor: pointer;
     position: relative;
@@ -242,10 +203,11 @@
     flex-direction: column;
     align-items: flex-start;
     margin-bottom: 0px;
-    background-color: var(--navbar-background-color);
+   
     .metaContainer{
       display: flex;
       align-items: center;
+      color: #86909c;
       .userMessage{
         display: flex;
         align-items: center;
@@ -309,11 +271,10 @@
       border-bottom: 1px solid #e5e6eb;
       margin-top: 10px;
       width: 100%;
-
       border-bottom: 1px solid rgba(228, 230, 235, 0.5);
-
       .contentMain{
         flex: 1 1 auto;
+        width: 5rem;//bug导致伸缩失败
         .titleRow{
           display: flex;
           margin-bottom: 8px;
@@ -345,7 +306,32 @@
         .actionList{
           display: flex;
           align-items: center;
+          .actionItem{
+            display: flex;
+            position: relative;
+            margin-right: 20px;
+            font-size: 13px;
+            line-height: 20px;
+            color: #4e5969;
+            flex-shrink: 0;
+            span{
+              margin-left: 4px;
+            }
+            .comment v{
+              background-image: var(--comment-icon);
+            }
+          }
         }
+      }
+      .thumb{
+        flex: 0 0 auto;
+        width: 120px;
+        height: 80px;
+        margin-left: 24px;
+        background-color: #fff;
+        border-radius: 2px;
+        position: relative;
+        object-fit: cover;
       }
     }
     .dislike{
@@ -360,7 +346,7 @@
   display: inline-block;
   width: 1rem;
   height: 1rem;
-  background-color:rebeccapurple;
+  background-image: var(--popup-close-icon);
   background-size: 100% 100%;
   cursor: pointer;
 

@@ -1,5 +1,12 @@
 @import "../media.scss";
 
+.articleContainer{
+  margin-top:2rem;
+  position:relative;
+  max-width: 1140px;
+  margin: auto;
+}
+
 .article {
   color: var(--primary-color);
   width: 50rem;

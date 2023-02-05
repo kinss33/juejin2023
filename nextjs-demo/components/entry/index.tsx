@@ -1,9 +1,14 @@
 import { FC } from "react";
 import Image from "next/image";
 import publicLogo from "@/public/public_logo.png";
+import default_avatar from "@/public/default_avatar.webp"
 import styles from "./styles.module.scss";
 import cName from "classnames";
+import {CMSDOMAIN,TimeDescriptionFromCurrent } from "@/utils/index"
+import { UserInfoRow} from "@/components/element/userInfo/index"
+import {  OperateRow} from "@/components/element/operate/index"
 import { IPopOverProps, PopOver } from "../popover/index"
+import { IUserInfoRowProps} from"@/components/element/userInfo/index"
 import React, {
   forwardRef,
   useRef,
@@ -14,98 +19,92 @@ import React, {
   useMemo,
 } from "react";
 import { time } from "console";
-
-export const Entry:FC<{}> =({
+import { url } from "inspector";
+import { userInfo } from "os";
+export interface IArticleBriefProps {
+  title:string;
+  date:string;
+  tags:Array<string>;
+  description:string;
+  view:number;
+  like:number;
+  comment:number;
+  UserInfo:IUserInfoRowProps;
+  cover:string;
+}
+export const Entry:FC<IArticleBriefProps> =({
+  UserInfo,
+  title,
+  date,
+  tags,
+  description,
+  view,
+  like,
+  comment,
+  cover,
 }) =>{
-    
-  const DisLikeMenu:FC<{}> = ({})=>{
+  const popoverDislikeRef = useRef<IPopOverProps>(null);
+  const popoverUserMessageRef = useRef<IPopOverProps>(null);
+  const [disLikeVisible,setDisLikeVisible] = useState(false);
+  let currentTime:Date = new Date()
+  let publicTime = new Date(date)
+  const avatarUrl =UserInfo.avatar?UserInfo.avatar: default_avatar.src
 
-    const [tagVisible, setTagVisible] = useState(false);
-    return(
+  const DisLikeMenu = 
       <div className={styles.dislikeMenu} >
-
         <div className={styles.menuItem}>
-          <span className={styles.menuIcon} ></span>
+          <span className={[styles.menuIcon,styles.noInterest].join(' ')} ></span>
           <span className={styles.menuText} >不感兴趣</span>
         </div>
         <div className={styles.menuItem}>
-          <span className={styles.menuIcon} ></span>
-          <span className={styles.menuText} >屏蔽作者未完成</span>
+          <span className={[styles.menuIcon,styles.blockAuthor].join(' ')} ></span>
+          <span className={styles.menuText} >屏蔽作者： {UserInfo?.name}</span>
         </div>
-        <div className={styles.menuItem}>
-          <span className={styles.menuIcon} ></span>
+        <div className={styles.menuItem} onClick={()=>{
+          setDisLikeVisible(!disLikeVisible)
+        }} >
+          <span className={[styles.menuIcon,styles.blockTag].join(' ')} ></span>
           <span className={styles.menuText} >屏蔽标签</span>
         </div>
-        <div className={styles.tagsRow}>
+        {disLikeVisible?<div className={styles.tagRow}>
           <div className={styles.tagList}> 
-          <span className={styles.tagItem}>数据注入
-          </span>
+            {
+            tags.map(
+              (attributes)=>
+              <div className={styles.tagItem}>{attributes}</div>
+              )
+            }      
           </div>
           <div className={styles.btnBlockTag} >
-            确定屏蔽：数据注入
+            确定屏蔽
           </div>
-        </div>
+        </div>:<></>}
         <div className={styles.menuItem}>
-          <span className={styles.menuIcon} ></span>
-          <span className={styles.menuText} >举报</span>
-        </div>
-        <div className={styles.menuItem}>
-          <span className={styles.menuIcon} ></span>
+          <span className={[styles.menuIcon,styles.report].join(' ')} ></span>
           <span className={styles.menuText} >举报</span>
         </div>
       </div>
-    );
-  }
 
-  const UserMessageMenu:FC<{}> = ({})=>{
-
-    const [tagVisible, setTagVisible] = useState(false);
-    return(
+  const UserMessageMenu= 
       <div className={styles.popoverContent} >
-        <div className={styles.infoRow}>
-          <a href="xx">
-            <img src="" alt="" className={styles.avatar} />
-          </a>
-          <div className={styles.userInfo} >
-            <a href="" className={styles.userName}>
-              <span className={styles.name}>
-                名字
-              </span>
-              <span className={styles.rank}>
-                等级
-              </span>
-            </a>
-            <div className={styles.position}>
-              描述
-            </div>
-          </div>
-        </div>
-        <div  className={styles.operateButton}>
-          <button className={styles.followButton}>
-            关注
-          </button>
-          <a href="" className={styles.imButton}>
-            私信
-          </a>
-        </div>
+        <UserInfoRow {...UserInfo}></UserInfoRow>
+        <OperateRow></OperateRow>
         <div  className={styles.metaRow}>
           <ul className={styles.metaList}>
             <li className={styles.metaItem}>
-              <div className={styles.count}>2</div>
-              <div className={styles.title}>title</div>
+              <div className={styles.count}>{UserInfo?UserInfo.follow:0}</div>
+              <div className={styles.title}>关注</div>
             </li>
             <li  className={styles.divider}></li>
             <li className={styles.metaItem}>
-              <div className={styles.count}>2</div>
-              <div className={styles.title}>title</div>
+              <div className={styles.count}>{UserInfo?UserInfo.fan:0}</div>
+              <div className={styles.title}>粉丝</div>
             </li>
           </ul>
         </div>
       </div>
-    );
-  }
-  const popoverDislikeRef = useRef<IPopOverProps>(null);
-  const popoverUserMessageRef = useRef<IPopOverProps>(null);
+
+
   return (
     <div className ={styles.item}>
         <div className ={styles.entry} >
@@ -116,30 +115,51 @@ export const Entry:FC<{}> =({
               }}
               onMouseLeave={(Event):void=>{
                 popoverUserMessageRef.current?.onMouseLeave(Event);
-              }}>用户名
-              <div>
-              <PopOver ref={popoverUserMessageRef} fadeTime={500} >
-              <UserMessageMenu/>
-              </PopOver>
-              </div>
+              }}>{UserInfo?UserInfo.name:"未知用户"}  
+                <PopOver ref={popoverUserMessageRef} fadeTime={200} >
+                {UserMessageMenu}
+                </PopOver>
             </div>
-            <div className={styles.date}  >时间</div>
+            <div className={styles.date}  >
+              {TimeDescriptionFromCurrent(currentTime,publicTime)}
+            </div>
             <div className={styles.tagList}  >
-              <a className={styles.tag} href="xx">tag</a>
-              <a  className={styles.tag} href="xx">tag</a>
+                {
+                tags.map(
+                  (attributes)=>
+                  <a  className={styles.tag} href="xx">{attributes}</a>
+                  )
+                }  
               </div>
           </div>
           <div className={styles.cotentWrapper}>
             <div className={styles.contentMain} >
               <div className={styles.titleRow}  >
-                <a href="xx" className={styles.title}>我是一个标题我是一个标题我是一个标题我是一个标题</a></div>
-              <div className={styles.abstract} ><a href=""> 内容巴拉巴拉把啦啦啦啦发生的浪费内容巴拉巴拉把啦啦啦啦发生的浪费内容巴拉巴拉把啦啦啦啦发生的浪费</a>
+                <a href="xx" className={styles.title}>
+                  {title}
+                  </a></div>
+              <div className={styles.abstract} ><a href="">
+                {description}
+              </a>
                </div>
               <ul className={styles.actionList} >
-                <li className ={styles.item} >view</li>
-                <li className ={styles.item} >like</li>
+                <li className={[styles.actionItem,styles.view].join(' ')} >
+                  <i></i>
+                  <span>{view}</span>
+                </li>
+                <li className={[styles.actionItem,styles.like].join(' ')} >
+                  <i></i>
+                  <span>{like}</span>
+                </li>
+                <li className={[styles.actionItem,styles.comment].join(' ')} >
+                  <i></i>
+                  <span>{comment}</span>
+                </li>
               </ul>
               </div>
+              {cover&&<img 
+              src={cover}
+              className={styles.thumb}/>}
           </div>
 
           <div className={styles.dislike} 
@@ -151,7 +171,7 @@ export const Entry:FC<{}> =({
           }}
            >
           <PopOver ref={popoverDislikeRef} fadeTime={500} >
-              <DisLikeMenu/>
+              {DisLikeMenu}
               </PopOver>
           </div>
         </div>

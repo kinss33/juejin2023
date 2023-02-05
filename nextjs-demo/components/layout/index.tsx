@@ -22,7 +22,7 @@ export const Layout: FC<ILayoutProps & { children: JSX.Element }> = ({
       {/* <Test >{<h1>我是儿子</h1>}</Test> */}
       <NavBar {...navbarData} />
       <main className={styles.main}>{children}</main>
-      {/* <Footer {...footerData} /> */}
+      <Footer {...footerData} />
     </div>
   );
 };

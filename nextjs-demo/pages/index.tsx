@@ -99,28 +99,7 @@ const Home: NextPage<IProps & IComponentProps> = ({ title, description, articles
   );
 };
 
-Home.getInitialProps = async (context): Promise<IProps> => {
-  const { data: homeData } = await axios.get(`${LOCALDOMAIN}/api/home`);
-  const { data: articleData } = await axios.post(`${LOCALDOMAIN}/api/articleIntro`, {
-    pageNo: 1,
-    pageSize: 6,
-  });
-
-  return {
-    title: homeData.title,
-    description: homeData.description,
-    articles: {
-      list: articleData.list.map((item: IArticleIntro) => ({
-        label: item.label,
-        info: item.info,
-        link: `${LOCALDOMAIN}/article/${item.articleId}`,
-      })),
-      total: articleData.total,
-    },
-  };
-};
-
-// export const getServerSideProps: GetServerSideProps = async context => {
+// Home.getInitialProps = async (context): Promise<IProps> => {
 //   const { data: homeData } = await axios.get(`${LOCALDOMAIN}/api/home`);
 //   const { data: articleData } = await axios.post(`${LOCALDOMAIN}/api/articleIntro`, {
 //     pageNo: 1,
@@ -128,20 +107,41 @@ Home.getInitialProps = async (context): Promise<IProps> => {
 //   });
 
 //   return {
-//     props: {
-//       title: homeData.title,
-//       description: homeData.description,
-//       articles: {
-//         list: articleData.list.map((item: IArticleIntro) => ({
-//           label: item.label,
-//           info: item.info,
-//           link: `${LOCALDOMAIN}/article/${item.articleId}`,
-//         })),
-//         total: articleData.total,
-//       },
+//     title: homeData.title,
+//     description: homeData.description,
+//     articles: {
+//       list: articleData.list.map((item: IArticleIntro) => ({
+//         label: item.label,
+//         info: item.info,
+//         link: `${LOCALDOMAIN}/article/${item.articleId}`,
+//       })),
+//       total: articleData.total,
 //     },
 //   };
 // };
+
+export const getServerSideProps: GetServerSideProps = async context => {
+  const { data: homeData } = await axios.get(`${LOCALDOMAIN}/api/home`);
+  const { data: articleData } = await axios.post(`${LOCALDOMAIN}/api/articleIntro`, {
+    pageNo: 1,
+    pageSize: 6,
+  });
+
+  return {
+    props: {
+      title: homeData.title,
+      description: homeData.description,
+      articles: {
+        list: articleData.list.map((item: IArticleIntro) => ({
+          label: item.label,
+          info: item.info,
+          link: `${LOCALDOMAIN}/article/${item.articleId}`,
+        })),
+        total: articleData.total,
+      },
+    },
+  };
+};
 
 // export const getStaticProps: GetStaticProps = async context => {
 //   const { data: homeData } = await axios.get(`${LOCALDOMAIN}/api/home`);

@@ -100,9 +100,6 @@ export const NavBar: FC<INavBarProps> = ({}) => {
         <div>这是一个弹窗</div>
       </Popup>
     </div>
-      <div  className={styles.navBar} >
-      <ButtonList ButtonListData={data.ButtonListData} ></ButtonList>
-      </div>
     </div>
   );
 };
