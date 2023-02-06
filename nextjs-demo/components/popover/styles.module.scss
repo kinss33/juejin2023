@@ -3,7 +3,7 @@
 @mixin wrapper {
   position: absolute;
   display: flex;
-  z-index: 120;
+  z-index: 90;
   height: fit-content;
   width: fit-content;
 }

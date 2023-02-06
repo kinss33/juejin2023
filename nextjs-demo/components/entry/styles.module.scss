@@ -113,7 +113,9 @@
   box-sizing: border-box;
   border-radius: 2px;
   cursor: default;
-  z-index: 250;
+  margin-top: 20rem;
+  left: 0;
+  z-index: 80;
   box-shadow: 0 8px 24px rgb(81 87 103 / 16%);
   .metaRow{
     display: flex;

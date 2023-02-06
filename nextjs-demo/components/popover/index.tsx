@@ -26,8 +26,10 @@ export interface IPopOverProps {
 export const PopOver = forwardRef<IPopOverProps, { children:JSX.Element,fadeTime:number}>(({ children,fadeTime }, ref) => {
   const [visible, setVisible] = useState(false);
   const [leave, setLeave] = useState(false);
+  let entering:boolean  = false;
   let FadeTime:number = fadeTime
-  let timer: NodeJS.Timeout 
+  let LeaveTimer: NodeJS.Timeout 
+  let Enterimer: NodeJS.Timeout 
   let ticking:boolean = false
   useEffect(()=>{
     if(leave==true){
@@ -39,20 +41,28 @@ export const PopOver = forwardRef<IPopOverProps, { children:JSX.Element,fadeTime
   },[leave])
   function enterFunction():void {
     if(leave)return;
-    if(!visible){
-      setVisible(true);
+    if(!visible&&!entering){
+      entering=true;
+      Enterimer = setTimeout(()=>{
+        setVisible(true);
+        entering=false;
+      },350)
       return;
     }
     if(visible&&ticking){
-      clearTimeout(timer)
+      clearTimeout(LeaveTimer)
       ticking=false;
     }
   }
   function leaveFunction():void {
     if(leave)return;
+    if(entering){
+      clearTimeout(Enterimer)
+      entering=false; 
+    }
     if(visible){
-      clearTimeout(timer)
-      timer =  setTimeout(() => {
+      clearTimeout(Enterimer)
+      LeaveTimer =  setTimeout(() => {
         setLeave(true)
         ticking=false;
       }, FadeTime);

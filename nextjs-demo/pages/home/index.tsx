@@ -111,15 +111,11 @@ const CategoryMenu = categoryData.map((data:ICategoryProps)=>
   return (
     <div className={styles.bodyContainer} >
       <div  className={styles.category} >
-      <div className={styles.navList} >
-        {CategoryMenu}
-        <a href="" className ={styles.navItem}>
-          <span className ={styles.navText} >呵呵
-          </span>
-        </a>
-        {/* <a href="../recommend" className={styles.right}>标签管理</a> */}
+        <div className={styles.navList} >
+          {CategoryMenu}
+          {/* <a href="../recommend" className={styles.right}>标签管理</a> */}
+        </div>
       </div>
-    </div>
       <div className={styles.timelineContainer} >
         <div className={styles.tagNav}>这是次要选项 会隐藏</div>
         <div className={styles.timelineContent}>

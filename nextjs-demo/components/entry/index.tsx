@@ -1,6 +1,4 @@
 import { FC } from "react";
-import Image from "next/image";
-import publicLogo from "@/public/public_logo.png";
 import default_avatar from "@/public/default_avatar.webp"
 import styles from "./styles.module.scss";
 import cName from "classnames";
@@ -17,6 +15,7 @@ import React, {
   useImperativeHandle,
   useContext,
   useMemo,
+  createRef,
 } from "react";
 import { time } from "console";
 import { url } from "inspector";
@@ -48,6 +47,16 @@ export const Entry:FC<IArticleBriefProps> =({
   const [disLikeVisible,setDisLikeVisible] = useState(false);
   let currentTime:Date = new Date()
   let publicTime = new Date(date)
+
+  const textRef = useRef<object>(null)
+  //todo 修改弹框
+  useEffect(()=>{
+    console.log('函数组件使用hooks获取ref',textRef)
+  },[])
+  let UserInfoPositionX:number = 2;
+  let UserInfoPositionY:number =textRef.current?.offsetTop;
+  //let Rect:DOMRect =  document.documentElement.getBoundingClientRect()
+  
   const avatarUrl =UserInfo.avatar?UserInfo.avatar: default_avatar.src
 
   const DisLikeMenu = 
@@ -86,7 +95,7 @@ export const Entry:FC<IArticleBriefProps> =({
       </div>
 
   const UserMessageMenu= 
-      <div className={styles.popoverContent} >
+      <div className={styles.popoverContent}  >
         <UserInfoRow {...UserInfo}></UserInfoRow>
         <OperateRow></OperateRow>
         <div  className={styles.metaRow}>
@@ -106,7 +115,7 @@ export const Entry:FC<IArticleBriefProps> =({
 
 
   return (
-    <div className ={styles.item}>
+    <div ref={textRef} className ={styles.item}>
         <div className ={styles.entry} >
           <div className={styles.metaContainer}>
             <div className={styles.userMessage} 
